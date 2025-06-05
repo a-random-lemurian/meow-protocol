@@ -16,7 +16,7 @@ A Meow Protocol header is formatted as follows:
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     |Version| Cute  | Message Type  |  Animal Type  |           Breed       |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    | C | NameLen           |        Sender Name                          ...
+    | NameLen       |        Sender Name                                  ...
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ```
 
@@ -32,14 +32,24 @@ Where:
 
 `Breed`, 16-bit number identifying the breed of the animal in question. It is not strictly a breed identifier however, as this field has other uses depending on the Animal Type.
 
-`C` represents `Cuteness`, 2 bits, represents whether the sender of the message is cute or not. `00` indicates that the sender is not cute.  `01` indicates that the sender is cute. `10` represents "unknown", while `11` indicates that the sender is extremely cute.
-
 `NameLen`, 8 bits, is the length of the following Sender Name field. This field MUST reflect the number of bytes in the following UTF-8 string, and MUST NOT include the NUL byte at the end.
 
 `Sender Name` is the name of the entity meowing. This field MUST be encoded using UTF-8. This field MUST end with a NUL byte.
 
 ## Field values
 All following fields are in decimal.
+
+### Cuteness
+| Number | Meaning |
+|---|---|
+| 1 | The sender is not cute. 
+| 2 | The sender is cute.
+| 3 | The sender is very cute.
+| 4 | The sender is extremely cute.
+| 5 | The sender does not know if they are cute.
+| 6 | The sender does not want to disclose if they are cute or not.
+| 7 | The sender is ugly.
+| 8 | The sender is extremely ugly.
 
 ### Message type
 | Number | Meaning |
@@ -59,8 +69,6 @@ All following fields are in decimal.
 | 4 | Human, unspecified
 
 The human fields are intended for humans with the ability to replicate meows. Because cats have "high and bright voices" according to an unknown person consulted by the Meow Protocol authors, female voices are more adept at imitating meows. Because of this, humans have three specific animal numbers.
-
-
 
 ### Breed
 
