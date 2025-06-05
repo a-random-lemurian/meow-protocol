@@ -29,6 +29,17 @@ func generate(size int) string {
 	return *(*string)(unsafe.Pointer(&b))
 }
 
+func genericMeowMessage() meowproto.MeowProtocolMessage {
+	return meowproto.MeowProtocolMessage{
+		Version:     1,
+		MessageType: meowproto.MtMeow,
+		AnimalType:  meowproto.AtCat,
+		Breed:       meowproto.BrCalico,
+		Cuteness:    2,
+		Name:        "default",
+	}
+}
+
 func TestGoodMessage(t *testing.T) {
 	bytes, err := meow.ToBytes()
 	if err != nil {
@@ -46,13 +57,7 @@ func TestGoodMessage(t *testing.T) {
 }
 
 func TestSerializeLongName(t *testing.T) {
-	var long = &meowproto.MeowProtocolMessage{
-		Version:     1,
-		MessageType: meowproto.MtMeow,
-		AnimalType:  meowproto.AtCat,
-		Breed:       meowproto.BrCalico,
-		Cuteness:    2,
-	}
+	long := genericMeowMessage()
 	long.Name = generate(257)
 
 	bytes, err := long.ToBytes()
