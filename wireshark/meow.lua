@@ -33,6 +33,16 @@ local values         = {
             [2] = { "White" },
             [3] = { "Siamese" },
         },
+    },
+    cuteness = {
+        [1] = "Sender is not cute.",
+        [2] = "Sender is cute",
+        [3] = "Sender is very cute",
+        [4] = "Sender is extremely cute",
+        [5] = "Sender does not know if they are cute",
+        [6] = "Sender does not want to disclose if they are cute or not",
+        [7] = "Sender is ugly",
+        [8] = "Sender is extremely ugly",
     }
 }
 
@@ -51,6 +61,10 @@ local function get_breed(animal, breed)
     local breeds = values.breed[animal] or {}
     if breeds == {} then return "Unknown" end
     if breeds[breed] then return breeds[breed][1] or "Unknown" else return "Unknown" end
+end
+
+local function get_cuteness(cuteness)
+    return values.cuteness[cuteness] or "Unknown"
 end
 
 function meow_protocol.dissector(buffer, pinfo, tree)
@@ -72,8 +86,10 @@ function meow_protocol.dissector(buffer, pinfo, tree)
 
     print(byte0, messageTypeBuf, animalTypeBuf, breedBuf)
 
+    local cutenessVal = bit.band(byte0:uint(), 0x0F)
+
     subtree:add(version, byte0)
-    subtree:add(cuteness, byte0)
+    subtree:add(cuteness, byte0):append_text(" (" .. get_cuteness(cutenessVal) .. ") ")
     subtree:add(messageType, messageTypeBuf):append_text(" (" .. get_message_type(messageTypeBuf:uint()) .. ")")
     subtree:add(animalType, animalTypeBuf):append_text(" (" .. get_animal_type(animalTypeBuf:uint()) .. ")")
     subtree:add(breed, breedBuf):append_text(" (" .. get_breed(animalTypeBuf:uint(), breedBuf:uint()) .. ")")
