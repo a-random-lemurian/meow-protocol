@@ -1,0 +1,74 @@
+# Meow Protocol
+
+The Meow Protocol is a revolutionary new protocol that allows hosts to meow at each other over the Internet.
+
+The Meow Protocol runs over UDP at port 3239 (`ca7` in hexadecimal).
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119.
+
+## Format
+
+A Meow Protocol header is formatted as follows:
+
+```
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |Version| Message Type  |  Animal Type  |           Breed               |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    | C | NameLen           |        Sender Name                          ...
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+```
+
+Where:
+
+`Version`, 4 bits, is the protocol version.
+
+`Message Type`, 8 bits, is the message type.
+
+`Animal Type`, 8 bits, is the type of the animal sending the Meow Protocol header. Meows are inherently associated with cats, but the animal field exists to allow other animals or biological organisms capable of imitating meows to identify themselves in a Meow Protocol header.
+
+`Breed`, 16-bit number identifying the breed of the animal in question. It is not strictly a breed identifier however, as this field has other uses depending on the Animal Type.
+
+`C` represents `Cuteness`, 2 bits, represents whether the sender of the message is cute or not. `00` indicates that the sender is not cute.  `01` indicates that the sender is cute. `10` represents "unknown", while `11` indicates that the sender is extremely cute.
+
+`NameLen`, 8 bits, is the length of the following Sender Name field. This field MUST reflect the number of bytes in the following UTF-8 string, and MUST NOT include the NUL byte at the end.
+
+`Sender Name` is the name of the entity meowing. This field MUST be encoded using UTF-8. This field MUST end with a NUL byte.
+
+## Field values
+All following fields are in decimal.
+
+### Message type
+| Number | Meaning |
+|---|---|
+| 1 | Meow
+| 2 | Purr
+| 3 | Scratch
+| 4 | Bite
+| 5 | Paw at you
+
+### Animal type
+| Number | Meaning |
+|---|---|
+| 1 | Cat
+| 2 | Human, male
+| 3 | Human, female
+| 4 | Human, unspecified
+
+The human fields are intended for humans with the ability to replicate meows. Because cats have "high and bright voices" according to an unknown person consulted by the Meow Protocol authors, female voices are more adept at imitating meows. Because of this, humans have three specific animal numbers.
+
+
+
+### Breed
+
+#### Cats
+| Number | Meaning |
+|---|---|
+| 0 | Unspecified |
+| 1 | Calico |
+| 2 | White |
+| 3 | Siamese |
+
+#### Human
+If the animal type is set to any form of human, the breed field MUST be filled with NUL bytes.
