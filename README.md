@@ -2,7 +2,7 @@
 
 The Meow Protocol is a revolutionary new protocol that allows hosts to meow at each other over the Internet.
 
-The Meow Protocol runs over UDP at port 3239 (`ca7` in hexadecimal).
+The Meow Protocol runs over UDP at port 32390 (`ca7` in hexadecimal with a 0 at the end, since 3239 is already assigned by IANA).
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119.
 
