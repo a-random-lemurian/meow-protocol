@@ -62,7 +62,8 @@ func (msg *MeowProtocolMessage) ToBytes() ([]byte, error) {
 }
 
 var (
-	ErrBadMessage = errors.New("invalid message")
+	ErrBadMessage    = errors.New("invalid message")
+	ErrBadNameLength = errors.New("length of name does not actually match up")
 )
 
 // TODO error handling
@@ -84,6 +85,11 @@ func ReadMessage(b []byte) (*MeowProtocolMessage, error) {
 	}
 	m.Version = version
 
+	m.Cuteness, err = r.ReadBits(4)
+	if err != nil {
+		return nil, err
+	}
+
 	m.MessageType, err = r.ReadBits(8)
 	if err != nil {
 		return nil, err
@@ -92,19 +98,16 @@ func ReadMessage(b []byte) (*MeowProtocolMessage, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	m.Breed, err = r.ReadBits(16)
 	if err != nil {
 		return nil, err
 	}
-	m.Cuteness, err = r.ReadBits(2)
+
+	nameLen, err := r.ReadBits(8)
 	if err != nil {
 		return nil, err
 	}
-
-	// nameLen, err := r.ReadBits(8)
-	// if err != nil {
-	// 	return nil, err
-	// }
 
 	name, err := buf.ReadString(0x00)
 	name = strings.TrimRight(name, "\x00")
@@ -112,6 +115,11 @@ func ReadMessage(b []byte) (*MeowProtocolMessage, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	if nameLen != uint64(len(name)) {
+		return nil, ErrBadNameLength
+	}
+
 	m.Name = name
 
 	return m, nil
