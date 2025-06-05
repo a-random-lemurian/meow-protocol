@@ -66,6 +66,25 @@ func TestSerializeLongName(t *testing.T) {
 	}
 }
 
+func TestJapaneseCatName(t *testing.T) {
+	cat := genericMeowMessage()
+	cat.Name = "招き猫" // maneki-neko https://en.wiktionary.org/wiki/%E6%8B%9B%E3%81%8D%E7%8C%AB#Japanese
+
+	bytes, err := meow.ToBytes()
+	if err != nil {
+		t.Error(err)
+	}
+
+	readback, err := meowproto.ReadMessage(bytes)
+	if err != nil {
+		t.Error(err)
+	}
+
+	if diff := cmp.Diff(meow, readback); diff != "" {
+		t.Errorf("mismatch (-want +got):\n%s", diff)
+	}
+}
+
 func BenchmarkSerialize(b *testing.B) {
 	for b.Loop() {
 		meow.ToBytes()
