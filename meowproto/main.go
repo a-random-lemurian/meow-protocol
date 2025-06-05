@@ -44,6 +44,8 @@ type MeowProtocolMessage struct {
 	Name        string
 }
 
+const MAX_NAME_LENGTH = 256
+
 func (msg *MeowProtocolMessage) ToBytes() ([]byte, error) {
 	buf := bytes.Buffer{}
 	w := bitio.NewWriter(&buf)
@@ -54,6 +56,10 @@ func (msg *MeowProtocolMessage) ToBytes() ([]byte, error) {
 	w.WriteBits(msg.AnimalType, 8)
 	w.WriteBits(msg.Breed, 16)
 	w.WriteBits(uint64(len(msg.Name)), 8)
+
+	if len(msg.Name) > MAX_NAME_LENGTH {
+		return nil, ErrNameTooLong
+	}
 
 	nameBytes := []byte(msg.Name)
 	nameBytes = append(nameBytes, 0)
@@ -66,6 +72,7 @@ func (msg *MeowProtocolMessage) ToBytes() ([]byte, error) {
 var (
 	ErrBadMessage    = errors.New("invalid message")
 	ErrBadNameLength = errors.New("length of name does not actually match up")
+	ErrNameTooLong   = errors.New("name exceeds 256 bytes") // Name length field is 8 bits
 )
 
 // TODO error handling
