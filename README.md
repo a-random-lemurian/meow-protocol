@@ -59,6 +59,8 @@ All following fields are in decimal.
 | 3 | Scratch
 | 4 | Bite
 | 5 | Paw at you
+| 6 | Growl
+| 7 | Hiss
 
 ### Animal type
 | Number | Meaning |

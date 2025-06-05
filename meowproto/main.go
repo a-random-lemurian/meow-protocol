@@ -15,6 +15,8 @@ const (
 	MtScratch         = 3
 	MtBite            = 4
 	MtPawAtYou        = 5
+	MtGrowl           = 6
+	MtHiss            = 7
 )
 
 const (
