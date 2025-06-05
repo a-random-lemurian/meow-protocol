@@ -14,7 +14,7 @@ A Meow Protocol header is formatted as follows:
      0                   1                   2                   3
      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |Version| Message Type  |  Animal Type  |           Breed               |
+    |Version| Cute  | Message Type  |  Animal Type  |           Breed       |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     | C | NameLen           |        Sender Name                          ...
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -23,6 +23,8 @@ A Meow Protocol header is formatted as follows:
 Where:
 
 `Version`, 4 bits, is the protocol version.
+
+`C` represents `Cuteness`, 4 bits, presents information about the sender's subjective evaluation of their cuteness. If the sender is not capable of self-reflection or is non-sentient, this field is assumed to be that of the human or computer evaluating the subject on whose behalf the message was sent.
 
 `Message Type`, 8 bits, is the message type.
 

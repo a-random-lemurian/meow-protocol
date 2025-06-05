@@ -47,10 +47,10 @@ func (msg *MeowProtocolMessage) ToBytes() ([]byte, error) {
 	w := bitio.NewWriter(&buf)
 
 	w.WriteBits(msg.Version, 4)
+	w.WriteBits(msg.Cuteness, 4)
 	w.WriteBits(msg.MessageType, 8)
 	w.WriteBits(msg.AnimalType, 8)
 	w.WriteBits(msg.Breed, 16)
-	w.WriteBits(msg.Cuteness, 2)
 	w.WriteBits(uint64(len(msg.Name)), 8)
 
 	nameBytes := []byte(msg.Name)
