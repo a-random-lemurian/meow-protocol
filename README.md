@@ -69,8 +69,12 @@ All following fields are in decimal.
 | 2 | Human, male
 | 3 | Human, female
 | 4 | Human, unspecified
+| 127 | Pokémon
 
 The human fields are intended for humans with the ability to replicate meows. Because cats have "high and bright voices" according to an unknown person consulted by the Meow Protocol authors, female voices are more adept at imitating meows. Because of this, humans have three specific animal numbers.
+
+Animal type 127 was added to the spec for an early Meow Protocol user who used the protocol to send the authors a Meow Protocol message for their favorite Pokémon.
+
 
 ### Breed
 
@@ -81,6 +85,9 @@ The human fields are intended for humans with the ability to replicate meows. Be
 | 1 | Calico |
 | 2 | White |
 | 3 | Siamese |
+
+#### Other animals
+If the Animal type field is set to 127, the breed value MUST be the Pokédex number of the animal meowing, indexed at one. A breed value of zero MUST be interpreted as the breed not being known.
 
 #### Human
 If the animal type is set to any form of human, the breed field MUST be filled with NUL bytes.

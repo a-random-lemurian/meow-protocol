@@ -24,6 +24,7 @@ const (
 	AtHumanM
 	AtHumanF
 	AtHumanUnknown
+	AtPokemon = 127
 )
 
 const (

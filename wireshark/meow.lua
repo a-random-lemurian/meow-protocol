@@ -23,7 +23,8 @@ local values         = {
         [1] = { "Cat" },
         [2] = { "Human, male" },
         [3] = { "Human, female" },
-        [4] = { "Human, unspecified" }
+        [4] = { "Human, unspecified" },
+        [127] = { "Pokémon" }
     },
     breed = {
         -- Cats
