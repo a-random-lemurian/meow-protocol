@@ -61,6 +61,9 @@ All following fields are in decimal.
 | 5 | Paw at you
 | 6 | Growl
 | 7 | Hiss
+| 200-255 | Reserved
+
+Message type numbers from 200 to 255 MAY be used for private uses of the Meow Protocol involving animals not known to the Meow Protocol authors, or for carrying other information.
 
 ### Animal type
 | Number | Meaning |
@@ -70,11 +73,13 @@ All following fields are in decimal.
 | 3 | Human, female
 | 4 | Human, unspecified
 | 127 | Pokémon
+| 200-255 | Reserved
 
 The human fields are intended for humans with the ability to replicate meows. Because cats have "high and bright voices" according to an unknown person consulted by the Meow Protocol authors, female voices are more adept at imitating meows. Because of this, humans have three specific animal numbers.
 
 Animal type 127 was added to the spec for an early Meow Protocol user who used the protocol to send the authors a Meow Protocol message for their favorite Pokémon.
 
+Animal type numbers from 200 to 255 MAY be used for private uses of the Meow Protocol involving animals not known to the Meow Protocol authors, or for carrying other information.
 
 ### Breed
 
