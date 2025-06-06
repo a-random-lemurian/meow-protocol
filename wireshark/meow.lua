@@ -84,18 +84,26 @@ function meow_protocol.dissector(buffer, pinfo, tree)
     local nameLenBuf = buffer(5, 1)
     local nameLen = nameLenBuf:uint()
     local nameBuf = buffer(6, nameLen)
+    local nameStr = nameBuf:string()
 
     print(byte0, messageTypeBuf, animalTypeBuf, breedBuf)
 
     local cutenessVal = bit.band(byte0:uint(), 0x0F)
 
+
+    local messageTypeStr = get_message_type(messageTypeBuf:uint())
+    local animalTypeStr = get_animal_type(animalTypeBuf:uint())
+    local breedStr =  get_breed(animalTypeBuf:uint(), breedBuf:uint())
+
     subtree:add(version, byte0)
     subtree:add(cuteness, byte0):append_text(" (" .. get_cuteness(cutenessVal) .. ") ")
-    subtree:add(messageType, messageTypeBuf):append_text(" (" .. get_message_type(messageTypeBuf:uint()) .. ")")
-    subtree:add(animalType, animalTypeBuf):append_text(" (" .. get_animal_type(animalTypeBuf:uint()) .. ")")
-    subtree:add(breed, breedBuf):append_text(" (" .. get_breed(animalTypeBuf:uint(), breedBuf:uint()) .. ")")
+    subtree:add(messageType, messageTypeBuf):append_text(" (" .. messageTypeStr .. ")")
+    subtree:add(animalType, animalTypeBuf):append_text(" (" .. animalTypeStr .. ")")
+    subtree:add(breed, breedBuf):append_text(" (" ..breedStr .. ")")
     subtree:add(nameLength, nameLenBuf)
     subtree:add(name, nameBuf)
+
+    pinfo.cols.info =  nameStr .. " (" .. animalTypeStr .. ", " .. breedStr .. ") : " .. messageTypeStr
 end
 
 local udp_port = DissectorTable.get("udp.port")
